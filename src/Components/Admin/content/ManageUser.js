@@ -6,19 +6,30 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import ModalCreateUser from "./ModalCreateUser";
+import "./ManageUser.scss";
+import { BsPlusSquareDotted } from "react-icons/bs";
 
 const ManageUser = (props) => {
+  const [showModalCreateUser, setShowModalCreateUser] = useState(false);
   return (
     <div className="manage-user-container">
       <div className="title">Manage User</div>
       <div className="user-content">
-        <div>
-          <button>Add New Users</button>
+        <div className="btn-add-new">
+          <button
+            className="btn btn-primary"
+            onClick={() => setShowModalCreateUser(true)}
+          >
+            {" "}
+            <BsPlusSquareDotted />
+            Add New Users
+          </button>
         </div>
-        <div>
-          table users
-          <ModalCreateUser />
-        </div>
+        <div className="table-users-container">table users</div>
+        <ModalCreateUser
+          show={showModalCreateUser}
+          setShow={setShowModalCreateUser}
+        />
       </div>
     </div>
   );
