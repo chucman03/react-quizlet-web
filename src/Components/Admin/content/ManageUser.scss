@@ -2,13 +2,20 @@
   padding: 10px;
   .user-content {
     .btn-add-new {
+      margin: 15px 0;
       button {
         border: none;
         border-radius: 3px;
       }
     }
+    .table-users-container {
+      padding-top: 20px;
+      width: 50vw;
+    }
   }
   .title {
+    font-weight: 600;
+    font-size: 20px;
   }
 }
 .modal-add-user {
