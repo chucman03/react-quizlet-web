@@ -11,22 +11,15 @@ import Admin from "./Components/Admin/Admin";
 import HomePage from "./Components/Home/HomePage";
 import ManageUser from "./Components/Admin/content/ManageUser";
 import DashBoard from "./Components/Admin/content/DashBoard";
+import Login from "./Components/Auth/Login";
+import Layout from "./Layout";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     {/* <React.StrictMode> */}
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route index element={<HomePage />} />
-          <Route path="users" element={<User />} />
-          <Route path="admin" element={<Admin />}>
-            <Route index element={<DashBoard />} />
-            <Route path="manage-users" element={<ManageUser />} />
-          </Route>
-        </Route>
-      </Routes>
-      {/* </React.StrictMode> */}
+      <Layout />
     </BrowserRouter>
   </Provider>
 );
