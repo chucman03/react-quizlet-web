@@ -6,7 +6,8 @@ const postCreateNewUser = (email, password, username, role, image) => {
   data.append("password", password);
   data.append("username", username);
   data.append("role", role);
-  data.append("image", image);
+  data.append("userImage", image);
+
   return axios.post("/api/v1/participant", data);
 };
 
@@ -30,6 +31,10 @@ const getUserWithPaginate = (page, limit) => {
 };
 const postLogin = (email, password) => {
   return axios.post(`/api/v1/login`, { email, password });
+};
+
+const postSignUp = (email, password, username) => {
+  return axios.post(`/api/v1/login`, { email, password, username });
 };
 
 export {

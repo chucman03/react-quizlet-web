@@ -1,15 +1,21 @@
-import { useState } from "react";
-import "./Login.scss";
-import { Navigate, useNavigate } from "react-router-dom";
-import { postLogin } from "../../serviecs/apiServices";
+import "./SignUp.scss";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { NavItem } from "react-bootstrap";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { VscEye, VscEyeClosed } from "react-icons/vsc";
 
-const Login = (props) => {
+const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [showHide, setShowHide] = useState(false);
   const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate("/login");
+  };
 
   const validateEmail = (email) => {
     return String(email)
@@ -19,10 +25,7 @@ const Login = (props) => {
       );
   };
 
-  const handleSignUp = () => {
-    navigate("/signup");
-  };
-  const handleLogin = async () => {
+  const handleSignUp = async () => {
     const isValidEmail = validateEmail(email);
     if (!isValidEmail) {
       toast.error("invalid email");
@@ -33,7 +36,7 @@ const Login = (props) => {
       return;
     }
 
-    let data = await postLogin(email, password);
+    let data = await postSignUp(email, password, username);
     if (data && data.EC === 0) {
       toast.success(data.EM);
       Navigate("/");
@@ -43,15 +46,15 @@ const Login = (props) => {
     }
   };
   return (
-    <div className="login-container">
+    <div className="SignUp-container">
       <div className="header">
-        <span> Don't have account yet?</span>
-        <button className="btn-signup" onClick={() => handleSignUp()}>
-          Sign Up
+        <span> Already have account?</span>
+        <button className="btn-login" onClick={() => handleLogin()}>
+          Login
         </button>
       </div>
       <div className="title col-4 mx-auto">Chucman Quiz </div>
-      <div className="welcome col-4 mx-auto">Hello who's this?</div>
+      <div className="welcome col-4 mx-auto">Register and start now</div>
       <div className="content-form col-4 mx-auto">
         <div className="form-group">
           <label>Email</label>
@@ -66,16 +69,33 @@ const Login = (props) => {
           <label>Password</label>
 
           <input
-            type={"Password"}
+            type={showHide ? "text" : "password"}
             className="form-control"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
+          {showHide ? (
+            <span className="show-hide" onClick={() => setShowHide(false)}>
+              <VscEye />
+            </span>
+          ) : (
+            <span className="show-hide" onClick={() => setShowHide(true)}>
+              <VscEyeClosed />
+            </span>
+          )}
         </div>
-        <span className="forgot-password">Forgot password ?</span>
+        <div className="form-group">
+          <label>User Name</label>
+          <input
+            type={"text"}
+            className="form-control"
+            value={username}
+            onChange={(event) => setUsername(event.target.value)}
+          />
+        </div>
         <div>
-          <button className="btn-submit" onClick={() => handleLogin()}>
-            Login to Quiz account
+          <button className="btn-submit" onClick={() => handleSignUp()}>
+            Create an account
           </button>
         </div>
         <div className="text-center">
@@ -93,4 +113,4 @@ const Login = (props) => {
     </div>
   );
 };
-export default Login;
+export default SignUp;

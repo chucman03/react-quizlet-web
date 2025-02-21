@@ -8,6 +8,7 @@ import DashBoard from "./Components/Admin/content/DashBoard";
 import Login from "./Components/Auth/Login";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SignUp from "./Components/Auth/SignUp";
 const Layout = (props) => {
   return (
     <>
@@ -21,6 +22,7 @@ const Layout = (props) => {
           </Route>
         </Route>
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
       </Routes>
       {/* </React.StrictMode> */}
 
