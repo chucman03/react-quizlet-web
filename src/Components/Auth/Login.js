@@ -5,10 +5,15 @@ import { postLogin } from "../../serviecs/apiServices";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { NavItem } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { doLogin } from "../../redux/action/userAction";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   const validateEmail = (email) => {
@@ -35,10 +40,11 @@ const Login = (props) => {
 
     let data = await postLogin(email, password);
     if (data && data.EC === 0) {
+      dispatch(doLogin(data));
       toast.success(data.EM);
-      Navigate("/");
+      navigate("/");
     }
-    if (data && data.EC !== 0) {
+    if (data && +data.EC !== 0) {
       toast.error(data.EM);
     }
   };

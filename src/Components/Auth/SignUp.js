@@ -5,17 +5,14 @@ import { NavItem } from "react-bootstrap";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
+import { postSignUp } from "../../serviecs/apiServices";
 
-const SignUp = () => {
+const SignUp = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [showHide, setShowHide] = useState(false);
   const navigate = useNavigate();
-
-  const handleLogin = () => {
-    navigate("/login");
-  };
 
   const validateEmail = (email) => {
     return String(email)
@@ -39,9 +36,9 @@ const SignUp = () => {
     let data = await postSignUp(email, password, username);
     if (data && data.EC === 0) {
       toast.success(data.EM);
-      Navigate("/");
+      navigate("/login");
     }
-    if (data && data.EC !== 0) {
+    if (data && +data.EC !== 0) {
       toast.error(data.EM);
     }
   };
@@ -49,7 +46,12 @@ const SignUp = () => {
     <div className="SignUp-container">
       <div className="header">
         <span> Already have account?</span>
-        <button className="btn-login" onClick={() => handleLogin()}>
+        <button
+          className="btn-login"
+          onClick={() => {
+            navigate("/login");
+          }}
+        >
           Login
         </button>
       </div>

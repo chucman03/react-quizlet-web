@@ -21,12 +21,12 @@ const ManageUser = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const [showModalCreateUser, setShowModalCreateUser] = useState(false);
-  const [showModalUpdateUser, setShowModalUdateUser] = useState(false);
+  const [showModalUpdateUser, setShowModalUpdateUser] = useState(false);
   const [dataUpdate, setDataUpdate] = useState({});
 
   // view
-  // const [showModalViewUser, setShowModalViewUser] = useState(false);
-  // const [dataView, setDataView] = useState({});
+  const [showModalViewUser, setShowModalViewUser] = useState(false);
+  const [dataView, setDataView] = useState({});
   const [dataDelete, setDataDelete] = useState({});
 
   const [showModalDeleteUser, setShowModalDeleteUser] = useState(false);
@@ -36,10 +36,10 @@ const ManageUser = (props) => {
   }, []);
 
   // view
-  // const handleClickBtnView = (user) => {
-  //   setShowModalViewUser(true);
-  //   setDataView(user);
-  // };
+  const handleClickBtnView = (user) => {
+    setShowModalViewUser(true);
+    setDataView(user);
+  };
 
   const handleClickBtnDelete = (user) => {
     setShowModalDeleteUser(true);
@@ -60,7 +60,7 @@ const ManageUser = (props) => {
     }
   };
   const handleClickBtnUpdate = (user) => {
-    setShowModalUdateUser(true);
+    setShowModalUpdateUser(true);
     setDataUpdate(user);
   };
 
@@ -93,7 +93,7 @@ const ManageUser = (props) => {
             listUsers={listUsers}
             handleClickBtnUpdate={handleClickBtnUpdate}
             handleClickBtnDelete={handleClickBtnDelete}
-            // handleClickBtnView={handleClickBtnView}
+            handleClickBtnView={handleClickBtnView}
             fetchListUsersWithPaginate={fetchListUsersWithPaginate}
             pageCount={pageCount}
             currentPage={currentPage}
@@ -109,7 +109,7 @@ const ManageUser = (props) => {
           currentPage={currentPage}
         />
         {/* view */}
-        {/* <ModalViewUser
+        <ModalViewUser
           show={showModalViewUser}
           setShow={setShowModalViewUser}
           fetchListUsers={fetchListUsers}
@@ -117,11 +117,12 @@ const ManageUser = (props) => {
           dataView={dataView}
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
-        /> */}
+          resetUpdateData={resetUpdateData}
+        />
 
         <ModalUpdateUser
           show={showModalUpdateUser}
-          setShow={setShowModalUdateUser}
+          setShow={setShowModalUpdateUser}
           dataUpdate={dataUpdate}
           fetchListUsers={fetchListUsers}
           fetchListUsersWithPaginate={fetchListUsersWithPaginate}

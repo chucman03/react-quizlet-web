@@ -1,5 +1,12 @@
 import VideoHomePage from "./../../assets/video-homepage.mp4";
+import { Outlet, NavLink, useNavigate } from "react-router-dom";
 const HomePage = (props) => {
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate("/signup");
+  };
+
   return (
     <div className="homepage-container">
       <video autoPlay muted loop>
@@ -12,7 +19,9 @@ const HomePage = (props) => {
           one. Create a typeform instead and make everyone happy
         </div>
         <div className="button-action">
-          <button>Get's started. It's free</button>
+          <button className="btn-login" onClick={() => handleLogin()}>
+            Get's started. It's free
+          </button>
         </div>
       </div>
     </div>
