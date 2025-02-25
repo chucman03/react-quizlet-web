@@ -1,7 +1,9 @@
+import { useSelector } from "react-redux";
 import VideoHomePage from "./../../assets/video-homepage.mp4";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
 const HomePage = (props) => {
   const navigate = useNavigate();
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 
   const handleLogin = () => {
     navigate("/signup");
@@ -19,9 +21,13 @@ const HomePage = (props) => {
           one. Create a typeform instead and make everyone happy
         </div>
         <div className="button-action">
-          <button className="btn-login" onClick={() => handleLogin()}>
-            Get's started. It's free
-          </button>
+          {isAuthenticated === false ? (
+            <button className="btn-login" onClick={() => handleLogin()}>
+              Get's started. It's free
+            </button>
+          ) : (
+            <button onClick={() => navigate("/users")}>Doing quiz now</button>
+          )}
         </div>
       </div>
     </div>

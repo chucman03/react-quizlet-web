@@ -9,20 +9,30 @@ import Login from "./Components/Auth/Login";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SignUp from "./Components/Auth/SignUp";
+import ListQuiz from "./Components/User/ListQuiz";
+import DetailQuiz from "./Components/User/DetailQuiz";
+
+const NotFound = () => {
+  return (
+    <div className="container mt-3 alert alert-danger">not found data </div>
+  );
+};
 const Layout = (props) => {
   return (
     <>
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<HomePage />} />
-          <Route path="users" element={<User />} />
+          <Route path="users" element={<ListQuiz />} />
           <Route path="admin" element={<Admin />}>
             <Route index element={<DashBoard />} />
             <Route path="manage-users" element={<ManageUser />} />
           </Route>
         </Route>
+        <Route path="/quiz/:id" element={<DetailQuiz />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       {/* </React.StrictMode> */}
 
