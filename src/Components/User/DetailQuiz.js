@@ -13,11 +13,12 @@ const DetailQuiz = (props) => {
   const [dataQuiz, setDataQuiz] = useState([]);
   const [index, setIndex] = useState(0);
   useEffect(() => {
-    fetchQuestion;
+    fetchQuestion();
   }, [quizId]);
 
   const fetchQuestion = async () => {
     let res = await getDataQuiz(quizId);
+
     if (res && res.EC === 0) {
       let raw = res.DT;
       let data = _.chain(raw)
@@ -33,6 +34,7 @@ const DetailQuiz = (props) => {
               questionDescription = item.description;
               image = item.image;
             }
+            item.answers.isSelected = false;
             answers.push(item.answers);
           });
 
@@ -43,13 +45,35 @@ const DetailQuiz = (props) => {
     }
   };
 
-  handlePrev = () => {
+  const handlePrev = () => {
     if (index - 1 < 0) return;
-    setIndex(index + 1);
+    setIndex(index - 1);
   };
 
-  handleNext = () => {
+  const handleNext = () => {
     if (dataQuiz && dataQuiz.length > index) setIndex(index + 1);
+  };
+  const handleCheckBox = (answerId, questionId) => {
+    let dataQuizClone = _.cloneDeep(dataQuiz);
+    let question = dataQuizClone.find(
+      (item) => +item.questionId === +questionId
+    );
+    if (question && question.answers) {
+      let b = question.answers.map((item) => {
+        if (item.id === +answerId) {
+          item.isSelected = !item.isSelected;
+        }
+        return item;
+      });
+      question.answers = b;
+    }
+    let index = dataQuizClone.findIndex(
+      (item) => +item.questionId === +questionId
+    );
+    if (index > -1) {
+      dataQuizClone[index] = question;
+      setDataQuiz(dataQuizClone);
+    }
   };
   return (
     <div className="detail-quiz-container">
@@ -70,6 +94,7 @@ const DetailQuiz = (props) => {
         <div className="q-content">
           <Question
             index={index}
+            handleCheckBox={handleCheckBox}
             data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[index] : []}
           />
         </div>
@@ -79,6 +104,9 @@ const DetailQuiz = (props) => {
           </button>
           <button className="btn btn-primary " onClick={() => handleNext()}>
             next
+          </button>
+          <button className="btn btn-warning " onClick={() => handleNext()}>
+            finish
           </button>
         </div>
       </div>
