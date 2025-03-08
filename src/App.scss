@@ -1,0 +1,66 @@
+body {
+  overflow: hidden;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.app-container {
+  .header-container {
+    .btn {
+      margin: 10px;
+      border: 1px solid black;
+      height: 40px;
+      &:hover {
+        background-color: rgb(255, 255, 255);
+      }
+    }
+    .navbar {
+      z-index: 10;
+      background-color: rgba(0, 0, 0, 0) !important;
+      .nav-link {
+        &.active {
+          color: aqua;
+        }
+      }
+    }
+  }
+  .homepage-container {
+    .homepage-content {
+      padding: 100px;
+      position: relative;
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      .title {
+        font-size: 50px;
+        font-weight: 500;
+      }
+      .desc {
+        font-size: 25px;
+      }
+      .button-action {
+        button {
+          background: rgb(46, 44, 44);
+          color: white;
+          border-radius: 5px;
+          height: 40px;
+          padding: 0 15px;
+          &:hover {
+            background: black;
+          }
+        }
+      }
+    }
+  }
+}
+
+video {
+  position: fixed;
+  width: 100vw;
+  bottom: 0;
+}
