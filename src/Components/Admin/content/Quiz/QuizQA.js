@@ -6,13 +6,14 @@ import { FaPlus, FaMinus } from "react-icons/fa";
 import { RiImageAddFill } from "react-icons/ri";
 import "./QuizQA.scss";
 import { v4 as uuidv4 } from "uuid";
-import _ from "lodash";
+import _, { reject } from "lodash";
 import Lightbox from "react-awesome-lightbox";
 import {
   getAllQuizForAdmin,
   postCreateNewQuestionForQuiz,
   postCreateNewAnswerForQuestion,
   getQuizWithQA,
+  postUpsertQA,
 } from "../../../../serviecs/apiServices";
 import { toast } from "react-toastify";
 
@@ -188,27 +189,6 @@ const QuizQA = () => {
   };
 
   const submitQuestionForQuiz = async () => {
-    //   Promise.all(
-    //     questions.map(async (question) => {
-    //       const q = await postCreateNewQuestionForQuiz(
-    //         +selectedQuiz.value,
-    //         question.description,
-    //         question.imageFile
-    //       );
-    //       await Promise.all(
-    //         question.answers.map(async (answer) => {
-    //           await postCreateNewAnswerForQuestion(
-    //             answer.description,
-    //             answer.isCorrect,
-    //             q.DT.id
-    //           );
-    //         })
-    //       );
-    //     })
-    //   );
-
-    //   // postCreateNewQuestionForQuiz,
-    //   // postCreateNewAnswerForQuestion,
     if (_.isEmpty(selectedQuiz)) {
       toast.error("please choose a Quiz!");
       return;
@@ -249,24 +229,31 @@ const QuizQA = () => {
       toast.error(`Not empty description for question ${indexQ1 + 1}`);
       return;
     }
-
-    for (const question of questions) {
-      const q = await postCreateNewQuestionForQuiz(
-        +selectedQuiz.value,
-        question.description,
-        question.imageFile
-      );
-      for (const answer of question.answers) {
-        await postCreateNewAnswerForQuestion(
-          answer.description,
-          answer.isCorrect,
-          q.DT.id
+    let questionsClone = _.cloneDeep(questions);
+    for (let i = 0; i < questionsClone.length; i++) {
+      if (questionsClone[i].imageFile) {
+        questionsClone[i].imageFile = await toBase64(
+          questionsClone[i].imageFile
         );
       }
     }
-    toast.success("create question and answer succeed!");
-    setQuestions(initQuestion);
+    let res = await postUpsertQA({
+      quizId: selectedQuiz.value,
+      questions: questionsClone,
+    });
+    if (res && res.EC === 0) {
+      toast.success(res.EM);
+      fetchQuizWithQA();
+    }
   };
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+
   const handlePreviewImage = (questionId) => {
     let questionsClone = _.cloneDeep(questions);
     let index = questionsClone.findIndex((item) => item.id === questionId);
