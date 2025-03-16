@@ -6,6 +6,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { postSignUp } from "../../serviecs/apiServices";
+import Language from "../Header/Language";
 
 const SignUp = (props) => {
   const [email, setEmail] = useState("");
@@ -54,6 +55,7 @@ const SignUp = (props) => {
         >
           Login
         </button>
+        <Language />
       </div>
       <div className="title col-4 mx-auto">Chucman Quiz </div>
       <div className="welcome col-4 mx-auto">Register and start now</div>
