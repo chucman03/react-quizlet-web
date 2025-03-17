@@ -17,6 +17,7 @@ import Layout from "./Layout";
 import { PersistGate } from "redux-persist/integration/react";
 import "nprogress/nprogress.css";
 import "react-awesome-lightbox/build/style.css";
+import "./utils/i18n";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

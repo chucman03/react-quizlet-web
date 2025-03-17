@@ -14,6 +14,7 @@ import DetailQuiz from "./Components/User/DetailQuiz";
 import ManageQuiz from "./Components/Admin/content/Quiz/ManageQuiz";
 import Questions from "./Components/Admin/content/Question/Questions";
 import PrivateRoute from "./routes/PrivateRoute";
+import React, { Suspense } from "react";
 
 const NotFound = () => {
   return (
@@ -22,7 +23,7 @@ const NotFound = () => {
 };
 const Layout = (props) => {
   return (
-    <>
+    <Suspense fallback={<div>loading...</div>}>
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<HomePage />} />
@@ -67,7 +68,7 @@ const Layout = (props) => {
         pauseOnHover
         theme="light"
       />
-    </>
+    </Suspense>
   );
 };
 export default Layout;

@@ -16,7 +16,6 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleLogin = () => {
-    dispatch(doLogout());
     navigate("/login");
   };
 
@@ -26,6 +25,7 @@ const Header = () => {
   const handleLogOut = async () => {
     let res = await logOut(account.email, account.refresh_token);
     if (res && res.EC === 0) {
+      dispatch(doLogout());
       navigate("/login");
     } else {
       toast.error(res.EM);
